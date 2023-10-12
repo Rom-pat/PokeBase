@@ -1,0 +1,13 @@
+{
+  "data" : [
+    {
+      "filename" : "Updated_pokemon.tsv",
+      "idiom" : "universal",
+      "universal-type-identifier" : "public.tab-separated-values-text"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
