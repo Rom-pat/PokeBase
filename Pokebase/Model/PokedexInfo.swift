@@ -75,3 +75,55 @@ func toggle_all_shinies(pokedex : [Pokemon_data], shiny_list: String, ShinyOn: B
         }
     }
 }
+
+// GAME REGIONS DEXS
+struct available_pokedex: Identifiable, Codable, Hashable{
+    let id: UUID = UUID()
+    var Name: String
+    var Dex: [Int]
+    var Gen: Int
+    static func set_game_list() -> [available_pokedex] {
+        var available_dex : [available_pokedex] = []
+        if let data = region_loader(filename: "RegionalDex.json") {
+            if let data2 = parse_Data(jsonData: data) {
+                available_dex = data2
+            }
+        }
+        return available_dex
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.Name = try container.decode(String.self, forKey: .Name)
+        self.Dex = try container.decode([Int].self, forKey: .Dex)
+        self.Gen = try container.decode(Int.self, forKey: .Gen)
+    }
+}
+
+
+private func region_loader(filename: String) -> Data?  {
+    var jsonData : Data
+    guard let file = Bundle.main.url(forResource: filename, withExtension: nil) else {
+        print("stuck here")
+        return nil
+    }
+    do {
+        jsonData = try Data(contentsOf: file)
+        return jsonData
+    }
+    catch {
+        print(error)
+    }
+    return nil
+}
+
+private func parse_Data(jsonData: Data) -> [available_pokedex]? {
+    do {
+        let decoding = try JSONDecoder().decode([available_pokedex].self, from: jsonData)
+        return decoding
+    }
+    catch {
+        print(error)
+    }
+    return nil
+}
+let FullGameList = available_pokedex.set_game_list()

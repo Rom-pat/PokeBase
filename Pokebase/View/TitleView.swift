@@ -28,7 +28,7 @@ private extension TitleView {
         }
     }
 }
-#Preview {TitleView(Pokedex: .constant(getCSVdata().filter( {
+#Preview {TitleView(Pokedex: .constant(Pokemon_data.Examples().filter( {
         pokemon in pokemon.Region == Regions.Kanto.rawValue
     })),shiny_count: .constant(0))
 }

@@ -8,9 +8,9 @@
 import SwiftUI
 import Charts
 struct PokemonView: View {
-    @ObservedObject var thispokemon:Pokemon_data
+    @ObservedObject var thispokemon:Pokemon_data 
     @Binding var shiny_count: Int
-    @State var Encounter: Int  = 0
+    @StateObject var PokemonVM: PokemonViewModel
     var body: some View {
         List{
             Section(content: {
@@ -55,7 +55,7 @@ struct PokemonView: View {
                 },header: {SectionHeader(Title: "Catch Date")})
             }
             Section(content: {
-                Stepper("Encounters:  \(Encounter)", value: $Encounter)},
+                Stepper("Encounters:  \(PokemonVM.Encounter)", value: $PokemonVM.Encounter)},
                     header:{SectionHeader(Title: "Encounters")})
 
             
@@ -81,41 +81,25 @@ struct PokemonView: View {
             
             
             Section(content: {
-                Link("Bulbapedia Link", destination: URL(string:                 "https://bulbapedia.bulbagarden.net/wiki/"+thispokemon.PokemonName.replacingOccurrences(of: " ", with: "_"))!)
+                Link("Bulbapedia Link", destination: PokemonVM.LinkReturn(Pokemon: thispokemon))
                     .font(.title)
                     .foregroundStyle(.blue)
             }, header: {SectionHeader(Title: "Possible locations")})
             
         }.onAppear(perform: {
-            Encounter = thispokemon.step
+            PokemonVM.SetEncounter(Pokemon: thispokemon)
         })
         .onDisappear(perform: {
-            thispokemon.step = Encounter
+            PokemonVM.EncounterSet(Pokemon: thispokemon)
         })
         .scrollContentBackground(.hidden)
-            .background(LinearGradient(gradient: Gradient(colors: pokemon_colors), startPoint: .topLeading, endPoint: .bottomTrailing))
+            .background(PokemonColors)
     }
 }
 
 struct PokemonView_Previews: PreviewProvider {
-    static var zekrom = getCSVdata()[643]
+    static var zekrom = Pokemon_data.Examples()[643]
     static var previews: some View {
-        PokemonView(thispokemon: zekrom, shiny_count: .constant(0))
-    }
-}
-
-private extension PokemonView {
-    func toggle_off() {
-        self.thispokemon.set_toggle()
-        shiny_count += thispokemon.display_toggle ? 1  : -1
-    }
-    var pokemon_colors : [Color] {
-        var color = [
-            Type_colors[thispokemon.Type1]!
-        ]
-        if thispokemon.Type2 != "" {
-            color.append(            Type_colors[thispokemon.Type2]!)
-        }
-        return color
+        PokemonView(thispokemon: zekrom, shiny_count: .constant(0),PokemonVM: PokemonView.PokemonViewModel())
     }
 }

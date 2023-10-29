@@ -17,7 +17,6 @@ struct CustomColor {
 struct Region_info {
     var RegionDex : Set<Int>
     var colorset : [Color]
-    
 }
 let RegionList: [Regions:Region_info] = [
     .All : .init(RegionDex: [0], colorset: [CustomColor.Top_col,CustomColor.bottom_col]),

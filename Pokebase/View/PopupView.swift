@@ -29,5 +29,5 @@ struct PopupView: View {
 }
 
 #Preview {
-    PopupView(Pokedex: .constant(getCSVdata()), shiny_count: .constant(2))
+    PopupView(Pokedex: .constant(Pokemon_data.Examples()), shiny_count: .constant(2))
 }

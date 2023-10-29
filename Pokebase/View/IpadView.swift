@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct IpadView: View {
+    @Binding var Pokedex: [Pokemon_data]
+    @StateObject private var ViewModel = IpadViewModel()
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationSplitView{
+            SidebarView(Chosen_Region: $ViewModel.choosen_region, Dex: $ViewModel.choosen_game_Dex)
+        } detail: {
+            let PokedexArgs = ViewModel.determine_Dex(Pokedex: Pokedex)
+            TabView {
+                PokedexRegionView(Pokedex: PokedexArgs.Pokedex, PokedexRegionVM: PokedexRegionView.PokedexViewModel(),Region: PokedexArgs.Region, Region_Gradient: PokedexArgs.Region_Gradient)
+                .tabItem {Label("Dex", systemImage: "list.dash") }
+            }
+        }
     }
 }
 
 #Preview {
-    IpadView()
+    IpadView(Pokedex: .constant(Pokemon_data.Examples()))
 }

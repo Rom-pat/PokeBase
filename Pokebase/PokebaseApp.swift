@@ -25,7 +25,7 @@ struct PokebaseApp: App {
                 .task {
                     do {try await Store.load()
                         if Store.PokedexStore.isEmpty{
-                            Store.PokedexStore = getCSVdata()
+                            Store.PokedexStore = Pokemon_data.Examples()
                         }
                     } catch {
                         errorWrapper = ErrorWrapAble(error: error,
@@ -33,7 +33,7 @@ struct PokebaseApp: App {
                     }
                 }
                 .sheet(item: $errorWrapper) {
-                    Store.PokedexStore = getCSVdata()
+                    Store.PokedexStore = Pokemon_data.Examples()
                 } content: { wrapper in
                     ErrorView(errorwrapper: wrapper)
                 }
