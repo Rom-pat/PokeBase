@@ -3,8 +3,8 @@
 
 ![PokeBase](Pokebase.png)
 ## Description: 
-    - This Project is For Pokemon Fans who wanted and easier way to desgin
-    - This Project is designed 
+    - This Project is For Pokemon Fans who wanted a simplier way to track their shiny collection and which game to retrieve them
+    - This Project is mainly written in SwiftUI  
 
 ## Architecture: 
     - PokeBase was implemented using Model-View-ViewModel (MVVM) architecture pattern
