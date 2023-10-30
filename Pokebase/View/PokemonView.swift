@@ -93,7 +93,8 @@ struct PokemonView: View {
             PokemonVM.EncounterSet(Pokemon: thispokemon)
         })
         .scrollContentBackground(.hidden)
-            .background(PokemonColors)
+        .background(PokemonColors)
+        .font(.system(size: 19))
     }
 }
 

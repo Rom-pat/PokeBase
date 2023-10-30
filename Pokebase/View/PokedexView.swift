@@ -29,16 +29,16 @@ struct PokedexRegionView: View {
                     }
                 }.scrollContentBackground( .hidden)
                     .padding()
-                    .toolbar(content: {
-                        Dex_toolbar()
-                    })
-            }.navigationTitle(TitleText)
+            }
+            .navigationTitle(TitleText)
             .alert("Shiny Swapper",
                    isPresented: $PokedexRegionVM.Popup,actions: {
                 PopupView(Pokedex: $Pokedex, shiny_count: $PokedexRegionVM.shiny_count)
             },message: {Text("please enter range of Pokemon to mass turn on/off as shiny")}
             )
-        }
+        }.toolbar(content: {
+            Dex_toolbar()
+        })
     }
 }
 

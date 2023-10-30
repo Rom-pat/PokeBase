@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SidebarView: View {
-    @Binding var Chosen_Region: Regions?
-    @Binding var Dex:  available_pokedex?
+    // Sidebar View 
+    @Binding var SelectedVal: SidebarVal
     @State private var hovered: String?
     @State private var Selected: String? = "All"
     var game_dexs: [available_pokedex] = FullGameList.sorted(by: {$0.Gen < $1.Gen})
@@ -19,13 +19,12 @@ struct SidebarView: View {
             Section(content: {
                 ForEach(Regions.allCases) { key in
                     Button(key.rawValue){
-                        Chosen_Region = key
-                        Dex = nil
+                        SelectedVal = SidebarVal.region(key)
                     }.font(.title)
                         .onHover{_ in
                             hovered = key.rawValue
                         }
-                        .foregroundStyle(Chosen_Region == key ? CustomColor.sidebarcolors : .accentColor)
+                        .foregroundStyle(SelectedVal.return_text() == key.rawValue ? CustomColor.sidebarcolors : .accentColor)
                         .cornerRadius(/*@START_MENU_TOKEN@*/35.0/*@END_MENU_TOKEN@*/)
                         .padding()
                 }
@@ -33,13 +32,12 @@ struct SidebarView: View {
             Section(content: {
                 ForEach(game_dexs) { game_dex in
                     Button(game_dex.Name) {
-                        Chosen_Region = nil
-                        Dex = game_dex
+                        SelectedVal = SidebarVal.Dex(game_dex)
                     }.font(.title)
                         .onHover{_ in
                         hovered = game_dex.Name
                     }
-                    .foregroundStyle(Dex == game_dex ? CustomColor.sidebarcolors : .accentColor)
+                        .foregroundStyle(SelectedVal.return_text() == game_dex.Name ? CustomColor.sidebarcolors : .accentColor)
                     .padding()
                 }
             },header: {
@@ -51,7 +49,7 @@ struct SidebarView: View {
 
 struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
-        SidebarView(Chosen_Region: .constant(.All), Dex: .constant(nil))
+        SidebarView(SelectedVal: .constant(SidebarVal.region(.All)))
     }
 }
 

@@ -24,7 +24,7 @@ struct SectionHeader: View {
     var Title: String
     var body: some View {
         Text(Title)
-           .font(.title3)
+            .font(.system(size: 35))
            .bold()
            .foregroundStyle(Color.white)
            .textCase(nil)

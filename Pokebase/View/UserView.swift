@@ -11,9 +11,11 @@ struct UserView: View {
     @State var name: String
     @State var email: String
     var body: some View {
-        Text("User: \(name)")
-        Text("User: \(email)")
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            Text("User: \(name)")
+            Text("User: \(email)")
+            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        }
         
     }
 }
