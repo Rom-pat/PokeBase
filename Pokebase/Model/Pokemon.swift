@@ -30,8 +30,8 @@ class Pokemon_data: ObservableObject, Identifiable, Codable{
     var Abilites: [String]
     var pokestats: [StatSpread]
     var date: Date = Date.now
-    var step: Int = 0
-    var display_toggle: Bool = false
+    @Published var step: Int = 0
+    @Published var display_toggle: Bool = false
     var Region: String
     func set_toggle() {
         self.display_toggle.toggle()
@@ -72,6 +72,52 @@ class Pokemon_data: ObservableObject, Identifiable, Codable{
         return cleanfile
         
     }
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.PokemonName = try container.decode(String.self, forKey: .PokemonName)
+        self.Poke_image = try container.decode(String.self, forKey: .Poke_image)
+        self.Shiny_image = try container.decode(String.self, forKey: .Shiny_image)
+        self.Type1 = try container.decode(String.self, forKey: .Type1)
+        self.Type2 = try container.decode(String.self, forKey: .Type2)
+        self.Abilites = try container.decode([String].self, forKey: .Abilites)
+        self.pokestats = try container.decode([StatSpread].self, forKey: .pokestats)
+        self.date = try container.decode(Date.self, forKey: .date)
+        self.step = try container.decode(Int.self, forKey: .step)
+        self.display_toggle = try container.decode(Bool.self, forKey: .display_toggle)
+        self.Region = try container.decode(String.self, forKey: .Region)
+    }
+    enum CodingKeys: CodingKey {
+        case id
+        case PokemonName
+        case Poke_image
+        case Shiny_image
+        case Type1
+        case Type2
+        case Abilites
+        case pokestats
+        case date
+        case step
+        case display_toggle
+        case Region
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.id, forKey: .id)
+        try container.encode(self.PokemonName, forKey: .PokemonName)
+        try container.encode(self.Poke_image, forKey: .Poke_image)
+        try container.encode(self.Shiny_image, forKey: .Shiny_image)
+        try container.encode(self.Type1, forKey: .Type1)
+        try container.encode(self.Type2, forKey: .Type2)
+        try container.encode(self.Abilites, forKey: .Abilites)
+        try container.encode(self.pokestats, forKey: .pokestats)
+        try container.encode(self.date, forKey: .date)
+        try container.encode(self.step, forKey: .step)
+        try container.encode(self.display_toggle, forKey: .display_toggle)
+        try container.encode(self.Region, forKey: .Region)
+    }
+    
 }
 
 private func region_place(poke: Pokemon_data) -> String {

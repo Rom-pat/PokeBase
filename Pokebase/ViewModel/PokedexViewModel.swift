@@ -59,8 +59,8 @@ extension PokedexRegionView {
             }
         }
     }
-    func Dex_toolbar() -> some ToolbarContent {
-        ToolbarItemGroup(placement: ToolbarItemPlacement.status, content: {
+    func DexToolbar() -> some ToolbarContent {
+        ToolbarItemGroup(placement: ToolbarItemPlacement.bottomBar, content: {
         Button(action: {
             PokedexRegionVM.toggle_on()
         }, label: {Label(title: {Text("Shiny")}, icon: {

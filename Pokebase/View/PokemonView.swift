@@ -32,30 +32,23 @@ struct PokemonView: View {
             
             
             Section(content: {
-                Image(thispokemon.display_toggle ? thispokemon.Shiny_image : thispokemon.Poke_image)
+                Image(thispokemon.display_toggle ? thispokemon.Shiny_image : thispokemon.Poke_image).id(thispokemon.display_toggle)
+                    .transition(.slide)
                     .padding(.horizontal, 100.0)
             }, header: {SectionHeader(Title: "Current Image Displayed")})
             
             
-            Section(content: {
-                Button(action: self.toggle_off) {
-                    Text(thispokemon.display_toggle ? "Yes" : "No")
-                        .font(.title2)
-                        .foregroundColor(thispokemon.display_toggle ? Color.green : Color.red)
-                }
-            },header: {SectionHeader(Title:  "Shiny variant caught?")})
-            
-            
+            Toggle("Shiny Caught?", isOn: $thispokemon.display_toggle)
             if thispokemon.display_toggle {
                 Section(content: {
                     DatePicker(
                         selection: $thispokemon.date,
                     displayedComponents: [.date]
                     ){Text("Caught Shiny Date")}
-                },header: {SectionHeader(Title: "Catch Date")})
+                },header: {SectionHeader(Title: "Catch Date")})        .animation(.easeIn, value: thispokemon.display_toggle)
             }
             Section(content: {
-                Stepper("Encounters:  \(PokemonVM.Encounter)", value: $PokemonVM.Encounter)},
+                Stepper("Encounters:  \(thispokemon.step)", value: $thispokemon.step)},
                     header:{SectionHeader(Title: "Encounters")})
 
             
@@ -85,13 +78,7 @@ struct PokemonView: View {
                     .font(.title)
                     .foregroundStyle(.blue)
             }, header: {SectionHeader(Title: "Possible locations")})
-            
-        }.onAppear(perform: {
-            PokemonVM.SetEncounter(Pokemon: thispokemon)
-        })
-        .onDisappear(perform: {
-            PokemonVM.EncounterSet(Pokemon: thispokemon)
-        })
+        }
         .scrollContentBackground(.hidden)
         .background(PokemonColors)
         .font(.system(size: 19))

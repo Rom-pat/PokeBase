@@ -9,13 +9,6 @@ import Foundation
 import SwiftUI
 extension PokemonView {
     @MainActor class PokemonViewModel: ObservableObject {
-        @Published var Encounter: Int  = 0
-        func SetEncounter(Pokemon: Pokemon_data) {
-            Encounter = Pokemon.step
-        }
-        func EncounterSet(Pokemon: Pokemon_data) {
-            Pokemon.step = Encounter
-        }
         func DexNumber(Pokemon: Pokemon_data)-> String {
             return "#"+String(format: "%04d", Pokemon.id)
         }

@@ -20,7 +20,7 @@ struct ContentView: View {
             .environmentObject(DexManager)
         }
         else if UIDevice.current.userInterfaceIdiom == .phone {
-            IphoneView()
+            IphoneView(Pokedex: $Pokedex)
             .environmentObject(DexManager)
         }
             

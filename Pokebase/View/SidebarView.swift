@@ -8,23 +8,29 @@
 import SwiftUI
 
 struct SidebarView: View {
-    // Sidebar View 
-    @Binding var SelectedVal: SidebarVal
+    // Sidebar View
+    @EnvironmentObject var DexManager: DexViewManager
     @State private var hovered: String?
     @State private var Selected: String? = "All"
     var game_dexs: [available_pokedex] = FullGameList.sorted(by: {$0.Gen < $1.Gen})
     var body: some View {
         List(selection: $Selected, content: {
+            Button(action: {
+                    DexManager.Selected = SidebarVal.Setting
+            }, label: {
+                Label(title: {Text("User")}, icon: {Image(systemName: "person.fill").font(.system(size: 50))})
+            }).font(.title)      .foregroundStyle(      DexManager.Selected.return_text() == "Settings" ? CustomColor.sidebarcolors : .accentColor)
+            
             
             Section(content: {
                 ForEach(Regions.allCases) { key in
                     Button(key.rawValue){
-                        SelectedVal = SidebarVal.region(key)
+                        DexManager.Selected = SidebarVal.region(key)
                     }.font(.title)
                         .onHover{_ in
                             hovered = key.rawValue
                         }
-                        .foregroundStyle(SelectedVal.return_text() == key.rawValue ? CustomColor.sidebarcolors : .accentColor)
+                        .foregroundStyle(                        DexManager.Selected.return_text() == key.rawValue ? CustomColor.sidebarcolors : .accentColor)
                         .cornerRadius(/*@START_MENU_TOKEN@*/35.0/*@END_MENU_TOKEN@*/)
                         .padding()
                 }
@@ -32,24 +38,26 @@ struct SidebarView: View {
             Section(content: {
                 ForEach(game_dexs) { game_dex in
                     Button(game_dex.Name) {
-                        SelectedVal = SidebarVal.Dex(game_dex)
+                        DexManager.Selected = SidebarVal.Dex(game_dex)
                     }.font(.title)
                         .onHover{_ in
                         hovered = game_dex.Name
                     }
-                        .foregroundStyle(SelectedVal.return_text() == game_dex.Name ? CustomColor.sidebarcolors : .accentColor)
+                        .foregroundStyle(                        DexManager.Selected.return_text() == game_dex.Name ? CustomColor.sidebarcolors : .accentColor)
                     .padding()
                 }
             },header: {
                 Text("Game Dex").foregroundStyle(Color.accentColor).font(.largeTitle).textCase(nil)
             })
         }).navigationTitle("Pokedex Sidebar").listStyle(.insetGrouped)
+         
     }
 }
 
 struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
-        SidebarView(SelectedVal: .constant(SidebarVal.region(.All)))
+        SidebarView()
+            .environmentObject(DexViewManager())
     }
 }
 

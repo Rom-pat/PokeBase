@@ -37,7 +37,7 @@ struct PokedexRegionView: View {
             },message: {Text("please enter range of Pokemon to mass turn on/off as shiny")}
             )
         }.toolbar(content: {
-            Dex_toolbar()
+                DexToolbar()
         })
     }
 }
