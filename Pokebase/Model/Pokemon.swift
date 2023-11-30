@@ -72,6 +72,20 @@ class Pokemon_data: ObservableObject, Identifiable, Codable{
         return cleanfile
         
     }
+    enum CodingKeys: CodingKey {
+        case id
+        case PokemonName
+        case Poke_image
+        case Shiny_image
+        case Type1
+        case Type2
+        case Abilites
+        case pokestats
+        case date
+        case step
+        case display_toggle
+        case Region
+    }
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
@@ -86,20 +100,6 @@ class Pokemon_data: ObservableObject, Identifiable, Codable{
         self.step = try container.decode(Int.self, forKey: .step)
         self.display_toggle = try container.decode(Bool.self, forKey: .display_toggle)
         self.Region = try container.decode(String.self, forKey: .Region)
-    }
-    enum CodingKeys: CodingKey {
-        case id
-        case PokemonName
-        case Poke_image
-        case Shiny_image
-        case Type1
-        case Type2
-        case Abilites
-        case pokestats
-        case date
-        case step
-        case display_toggle
-        case Region
     }
     
     func encode(to encoder: Encoder) throws {
@@ -127,4 +127,14 @@ private func region_place(poke: Pokemon_data) -> String {
         }
     }
     return "Unkown Region"
+}
+
+func All_photo(Dex: Int) -> [String] {
+    var Image_Container: [String] = []
+    let fileMang = FileManager.default
+    let enumerator = fileMang.enumerator(atPath: Bundle.main.bundlePath)
+    let filepaths = enumerator?.allObjects as! [String]
+    Image_Container = filepaths.filter{ $0.contains(String(format: "%04d", Dex))}
+    print(Image_Container)
+    return Image_Container
 }

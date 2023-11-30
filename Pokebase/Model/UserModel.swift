@@ -8,13 +8,22 @@
 import Foundation
 import CryptoKit
 import SwiftUI
-/*class User: ObservableObject {
-    @AppStorage var Photo: Image
-    @AppStorage var LoginName: String? = ""
-    @AppStorage var Email: String? = ""
-    @AppStorage var SignupDate = Date.now
-    var Pokemon_Data = PokedexStore()
-}*/
+class User: ObservableObject {
+    var Photo: Image = Image(systemName: "person.fill")
+    @AppStorage("LoginName") var LoginName: String = ""
+    @AppStorage("UserName") var UserName: String = ""
+    @AppStorage("Email") var Email: String = ""
+    @AppStorage("Dark mode") var darkMode : Bool = UserDefaults.standard.bool(forKey: "Dark mode")
+    @AppStorage("IsFavorite") var  IsFavorite: Int = 1
+    @AppStorage("IsShiny") var IsShiny: Bool = false
+    @AppStorage("Gen6ShinyCharm") var Gen6ShinyCharm = false
+    @AppStorage("Gen7ShinyCharm") var Gen7ShinyCharm = false
+    @AppStorage("Gen8ShinyCharm") var Gen8ShinyCharm = false
+    @AppStorage("Gen9ShinyCharm") var Gen9ShinyCharm = false
+    var SignupDate = Date.now
+    var UserDex = PokedexStore()
+    
+}
 class PokedexStore: ObservableObject {
     @Published var PokedexStore: [Pokemon_data] = []
     private static func fileURL() throws -> URL {

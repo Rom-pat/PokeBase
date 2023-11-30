@@ -19,19 +19,19 @@ struct IphoneView: View {
                         StackView(Dex_val: DexManager.DetermineIphoneView(Pokedex: Pokedex, Selection: SidebarVal.region(ThisRegion)))
                     }.padding()
                 }, header: {
-                    Text("Regions").foregroundStyle(Color.accentColor).font(.largeTitle).textCase(nil)
+                    Text("Regions").font(.largeTitle).textCase(nil)
                 })
                 Section(content: {
                     ForEach(Games) { Game in
                         StackView(Dex_val: DexManager.DetermineIphoneView(Pokedex: Pokedex, Selection: SidebarVal.Dex(Game)))
                     }.padding()
                 }, header: {
-                    Text("Dex").foregroundStyle(Color.accentColor).font(.largeTitle).textCase(nil)
+                    Text("Dex").font(.largeTitle).textCase(nil)
                 })
-            }
-    }.tabItem {Label(title: {Text("Dex")}, icon: {Image(systemName: "list.dash").font(.system(size: 50))}) }
-                UserView(name: "Romit", email: "romitp")
-                    .tabItem {Label(title: {Text("User")}, icon: {Image(systemName: "person.fill").font(.system(size: 50))}) }
+                
+            }}.tabItem {Label(title: {Text("Dex")}, icon: {Image(systemName: "list.dash").font(.system(size: 50))}) }
+            MethodView().tabItem {Label(title: {Text("Methods")}, icon: {Image(systemName: "m.circle").font(.system(size: 50))}) }
+        UserView().tabItem {Label(title: {Text("User")}, icon: {Image(systemName: "person.fill").font(.system(size: 50))}) }
         }
     }
 }
@@ -46,9 +46,11 @@ struct StackView: View {
 
 struct IphoneView_Previews: PreviewProvider {
     static let myobj = DexViewManager()
+    static let user = User()
     static var previews: some View {
         IphoneView(Pokedex: .constant(Pokemon_data.Examples()))
             .environmentObject(myobj)
+            .environmentObject(user)
     }
 }
 

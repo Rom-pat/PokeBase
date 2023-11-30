@@ -13,7 +13,6 @@ struct PokedexRegionView: View {
     PokedexViewModel()
     let Region: String
     let Region_Gradient: LinearGradient
-    @Environment(\.isSearching) private var isSearching
     var body: some View {
         VStack {
             TitleView(Pokedex: $Pokedex,shiny_count: $PokedexRegionVM.shiny_count)
@@ -38,7 +37,7 @@ struct PokedexRegionView: View {
             )
         }.toolbar(content: {
                 DexToolbar()
-        })
+        }).toolbar(.hidden, for: .tabBar)
     }
 }
 

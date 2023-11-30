@@ -26,7 +26,6 @@ extension PokemonView {
         return LinearGradient(gradient: Gradient(colors: color), startPoint: .topLeading, endPoint: .bottomTrailing)
     }
     func toggle_off() {
-        self.thispokemon.set_toggle()
         shiny_count += thispokemon.display_toggle ? 1  : -1
     }
     

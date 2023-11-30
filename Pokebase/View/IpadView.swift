@@ -21,8 +21,10 @@ struct IpadView: View {
 
 struct IpadView_Previews: PreviewProvider {
     static let myobj = DexViewManager()
+    static let user = User()
     static var previews: some View {
         IpadView(Pokedex: .constant(Pokemon_data.Examples()))
             .environmentObject(myobj)
+            .environmentObject(user)
     }
 }

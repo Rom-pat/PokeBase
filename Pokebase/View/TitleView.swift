@@ -10,6 +10,7 @@ import SwiftUI
 struct TitleView: View {
     @Binding var Pokedex : [Pokemon_data]
     @Binding var shiny_count : Int
+    @Environment(\.colorScheme) private var colorScheme
     var body: some View {
         Text(String(count_mons(Pokedex: Pokedex)) + "/" + String(Pokedex.count) + " Shinies")
         .foregroundColor(color)
@@ -24,7 +25,8 @@ private extension TitleView {
             return .green
         }
         else {
-            return .accentColor
+            
+            return (colorScheme == .dark ? .white : .black)
         }
     }
 }

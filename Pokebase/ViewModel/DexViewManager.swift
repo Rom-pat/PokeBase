@@ -39,7 +39,7 @@ class DexViewManager: ObservableObject {
             let Dex_val = self.DexDetailView(Pokedex: Pokedex)
             return AnyView(PokedexRegionView(Pokedex: Dex_val.Pokedex, Region: Dex_val.Region, Region_Gradient: Dex_val.Region_Gradient))
         case.Setting:
-            return AnyView(UserView(name: "Romit", email: "Romitp@umich.edu"))
+            return AnyView(UserView())
         }
     }
     func DexDetailView(Pokedex: [Pokemon_data]) -> (Pokedex: Binding<[Pokemon_data]>, Region: String,Region_Gradient : LinearGradient)  {

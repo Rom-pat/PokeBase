@@ -8,14 +8,15 @@
 import SwiftUI
 @main
 struct PokebaseApp: App {
-    @StateObject  private var Store = PokedexStore()
+    @StateObject private var CurrentUser = User()
     @State private var errorWrapper: ErrorWrapAble?
+    @State private var loading  = false
     var body: some Scene {
         WindowGroup {
-            ContentView(Pokedex: $Store.PokedexStore) {
+            ContentView(Pokedex: $CurrentUser.UserDex.PokedexStore) {
                 Task {
                     do {
-                        try await Store.save(pokedex_val: Store.PokedexStore)
+                        try await CurrentUser.UserDex.save(pokedex_val: CurrentUser.UserDex.PokedexStore)
                     } catch {
                         errorWrapper = ErrorWrapAble(error: error,
                                                     guidance: "Try again later.")
@@ -23,9 +24,9 @@ struct PokebaseApp: App {
                 }
             }
                 .task {
-                    do {try await Store.load()
-                        if Store.PokedexStore.isEmpty{
-                            Store.PokedexStore = Pokemon_data.Examples()
+                    do {try await CurrentUser.UserDex.load()
+                        if CurrentUser.UserDex.PokedexStore.isEmpty{
+                            CurrentUser.UserDex.PokedexStore = Pokemon_data.Examples()
                         }
                     } catch {
                         errorWrapper = ErrorWrapAble(error: error,
@@ -33,10 +34,12 @@ struct PokebaseApp: App {
                     }
                 }
                 .sheet(item: $errorWrapper) {
-                    Store.PokedexStore = Pokemon_data.Examples()
+                    CurrentUser.UserDex.PokedexStore = Pokemon_data.Examples()
                 } content: { wrapper in
                     ErrorView(errorwrapper: wrapper)
                 }
+                .environmentObject(CurrentUser)
+                /*.preferredColorScheme(CurrentUser.darkMode ? .dark : .light)*/
         }
     }
 }

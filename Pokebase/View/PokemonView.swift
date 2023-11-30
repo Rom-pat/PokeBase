@@ -30,13 +30,11 @@ struct PokemonView: View {
                     Text(thispokemon.Region)
             },header: {SectionHeader(Title: "Discovered Region")})
             
-            
             Section(content: {
                 Image(thispokemon.display_toggle ? thispokemon.Shiny_image : thispokemon.Poke_image).id(thispokemon.display_toggle)
                     .transition(.slide)
                     .padding(.horizontal, 100.0)
             }, header: {SectionHeader(Title: "Current Image Displayed")})
-            
             
             Toggle("Shiny Caught?", isOn: $thispokemon.display_toggle)
             if thispokemon.display_toggle {
@@ -82,6 +80,9 @@ struct PokemonView: View {
         .scrollContentBackground(.hidden)
         .background(PokemonColors)
         .font(.system(size: 19))
+        .onDisappear(perform: {
+            toggle_off()
+        })
     }
 }
 

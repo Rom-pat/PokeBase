@@ -16,7 +16,7 @@ enum Regions: String,CaseIterable, Identifiable {
 }
 
 
-enum Form :String, CaseIterable, Identifiable {
+enum Variant :String, CaseIterable, Identifiable {
     case All, Shinies, NonShinies
     var id: Self { self }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SidebarView: View {
     // Sidebar View
+    @EnvironmentObject var UserDetails: User
     @EnvironmentObject var DexManager: DexViewManager
     @State private var hovered: String?
     @State private var Selected: String? = "All"
@@ -18,7 +19,7 @@ struct SidebarView: View {
             Button(action: {
                     DexManager.Selected = SidebarVal.Setting
             }, label: {
-                Label(title: {Text("User")}, icon: {Image(systemName: "person.fill").font(.system(size: 50))})
+                Label(title: {Text(UserDetails.UserName).padding()}, icon: {Image(systemName: "person.fill").font(.system(size: 50))})
             }).font(.title)      .foregroundStyle(      DexManager.Selected.return_text() == "Settings" ? CustomColor.sidebarcolors : .accentColor)
             
             
@@ -55,10 +56,10 @@ struct SidebarView: View {
 }
 
 struct SidebarView_Previews: PreviewProvider {
+    static let user = User()
     static var previews: some View {
         SidebarView()
             .environmentObject(DexViewManager())
+            .environmentObject(user)
     }
 }
-
-
